@@ -4,7 +4,6 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define NUM_ERROS_TOTAL 5
-int segura;
 
 
 //funcao que imprime o cabecalho do jogo
@@ -222,6 +221,7 @@ int main()
     //LOOP DO JOGO:
     while (num_erros<5)
     {
+        vit = 0;
         indicador = 3;
         
         quadro_palavras(caracter);
