@@ -33,6 +33,7 @@ void cabecalho_anagrama(){
     std::cout<<"\n\t\t  >> Forme palavras com as letras do quadro"<<std::endl;
     std::cout<<"\t\t  >> Total de palavras depende da dificuldade"<<std::endl;
     std::cout<<"\t\t  >> "<<NUM_ERROS_TOTAL<<" tentativas erradas terminam o jogo"<<std::endl;
+    //std::cout<<"\t\t  >> Duas palavras repetidas contam como um erro"<<std::endl;
     SetConsoleTextAttribute(h,10); // verde
     std::cout<<"\n\t\t BOA SORTE !!!\n";
 
@@ -40,6 +41,7 @@ void cabecalho_anagrama(){
     SetConsoleTextAttribute(h,14); // amarelo
     std::cout<<"\n\t\t  >> Digite 'limpar' para limpar a tela se quiser"<<std::endl;
     std::cout<<"\t\t  >> Digite 'sair' para fechar o jogo"<<std::endl;
+    std::cout<<"\t\t  >> Digite 'bancop' para ver o banco de palavras"<<std::endl;
     std::cout<<"\t\t  >> Digite 'creditos' para abrir o menu de creditos (obs, isso vai terminar seu jogo!)"<<std::endl;
     SetConsoleTextAttribute(h,10); // verde
     std::cout<<"\n\t\tObs: os comandos devem ser digitados apos a escolha da dificuldade! "<<std::endl;
@@ -196,6 +198,22 @@ void quadro_letras(char pl[])
 
 
 
+//funcao que imprime o banco de palavras toda vez que eh chamada:
+void quadro_palavras(char pl[][12])
+{
+    SetConsoleTextAttribute(h,15); // branco
+    std::cout<<"\n\t        Quadro de palavras: "<<std::endl;
+    SetConsoleTextAttribute(h,9); // azul
+    for (int i=0; i<TAMANHO_BANCO; i++)
+    {
+        if (i % 5 == 0){std::cout<<"\n\t        ";}
+        std::cout<<std::setw(17)<<pl[i];
+    }
+    std::cout<<'\n';
+}
+
+
+
 //funcao para limpar a tela:
 void limpa_tela()
 {
@@ -273,7 +291,7 @@ int main()
     "cair", "calda", "cana", "canal", "candeeiro", "caneta", "canteiro", "carao",
     "cardeal", "caro", "cenica", "cenico", "cercada", "cercar", "cerco", "cerda",
     "cidada", "cidade", "cidadela", "cinco", "cine", "cinta", "circo", "cirio",
-    "coada", "coar", "conica", "conico", "corda", "cordao", "cria", "criaçao",
+    "coada", "coar", "conica", "conico", "corda", "cordao", "cria", "criacao",
     "criada", "criar", "crina", "cronica", "cronico", "dada", "danar", "dedada",
     "dedal", "dedao", "dedicada", "dedicar", "dela", "dentada", "dental", "dica",
     "dieta", "entalada", "entalar", "etnica", "etnico", "idade", "iene", "inalar",
@@ -395,6 +413,11 @@ int main()
         {
             vit = 3;
             break;
+        }
+        //imprime banco de palavras 
+        else if (strcmp(resposta, "bancop")==0)
+        {
+            quadro_palavras(banco_palavra);
         }
         //segue com o jogo:
         else
