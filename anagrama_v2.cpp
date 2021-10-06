@@ -3,57 +3,136 @@
 #include <iomanip>
 #include <stdio.h>
 #include <stdlib.h>
+#include <windows.h>
+//macros
 #define NUM_ERROS_TOTAL 5
 #define TAMANHO_BANCO 123
+#define h GetStdHandle (STD_OUTPUT_HANDLE)
 
 
 //funcao que imprime o cabecalho do jogo
 void cabecalho_anagrama(){
-
+    
+    SetConsoleTextAttribute(h,10); // verde
     //titulo do jogo em arte ascii, para ficar bonitona deve ser visualizada em tela cheia quando em modo exe(arquivo executavel)
     std::cout << R"(
-    ::::::'##::'#######:::'######::::'#######::::::::'###::::'##::: ##::::'###:::::'######:::'########:::::'###::::'##::::'##::::'###::::
-    :::::: ##:'##.... ##:'##... ##::'##.... ##::::::'## ##::: ###:: ##:::'## ##:::'##... ##:: ##.... ##:::'## ##::: ###::'###:::'## ##:::
-    :::::: ##: ##:::: ##: ##:::..::: ##:::: ##:::::'##:. ##:: ####: ##::'##:. ##:: ##:::..::: ##:::: ##::'##:. ##:: ####'####::'##:. ##::
-    :::::: ##: ##:::: ##: ##::'####: ##:::: ##::::'##:::. ##: ## ## ##:'##:::. ##: ##::'####: ########::'##:::. ##: ## ### ##:'##:::. ##:
-    '##::: ##: ##:::: ##: ##::: ##:: ##:::: ##:::: #########: ##. ####: #########: ##::: ##:: ##.. ##::: #########: ##. #: ##: #########:
-     ##::: ##: ##:::: ##: ##::: ##:: ##:::: ##:::: ##.... ##: ##:. ###: ##.... ##: ##::: ##:: ##::. ##:: ##.... ##: ##:.:: ##: ##.... ##:
-    . ######::. #######::. ######:::. #######::::: ##:::: ##: ##::. ##: ##:::: ##:. ######::: ##:::. ##: ##:::: ##: ##:::: ##: ##:::: ##:
-    :......::::.......::::......:::::.......::::::..:::::..::..::::..::..:::::..:::......::::..:::::..::..:::::..::..:::::..::..:::::..::      
+          ::::::'##::'#######:::'######::::'#######::::::::'###::::'##::: ##::::'###:::::'######:::'########:::::'###::::'##::::'##::::'###::::
+          :::::: ##:'##.... ##:'##... ##::'##.... ##::::::'## ##::: ###:: ##:::'## ##:::'##... ##:: ##.... ##:::'## ##::: ###::'###:::'## ##:::
+          :::::: ##: ##:::: ##: ##:::..::: ##:::: ##:::::'##:. ##:: ####: ##::'##:. ##:: ##:::..::: ##:::: ##::'##:. ##:: ####'####::'##:. ##::
+          :::::: ##: ##:::: ##: ##::'####: ##:::: ##::::'##:::. ##: ## ## ##:'##:::. ##: ##::'####: ########::'##:::. ##: ## ### ##:'##:::. ##:
+          '##::: ##: ##:::: ##: ##::: ##:: ##:::: ##:::: #########: ##. ####: #########: ##::: ##:: ##.. ##::: #########: ##. #: ##: #########:
+           ##::: ##: ##:::: ##: ##::: ##:: ##:::: ##:::: ##.... ##: ##:. ###: ##.... ##: ##::: ##:: ##::. ##:: ##.... ##: ##:.:: ##: ##.... ##:
+          . ######::. #######::. ######:::. #######::::: ##:::: ##: ##::. ##: ##:::: ##:. ######::: ##:::. ##: ##:::: ##: ##:::: ##: ##:::: ##:
+          :......::::.......::::......:::::.......::::::..:::::..::..::::..::..:::::..:::......::::..:::::..::..:::::..::..:::::..::..:::::..::      
     )" << '\n';
 
+    SetConsoleTextAttribute(h,10); // verde
     //quadro de regras do jogo, para informar o jogador das peculiaridades do jogo
-    std::cout<<"\n\tRegras: "<<std::endl;
-    std::cout<<"\n\t  >> Forme palavras com as letras do quadro"<<std::endl;
-    std::cout<<"\t  >> Total de palavras depende da dificuldade"<<std::endl;
-    std::cout<<"\t  >> "<<NUM_ERROS_TOTAL<<" tentativas erradas terminam o jogo"<<std::endl;
-    std::cout<<"\n\t BOA SORTE !!!\n";
+    std::cout<<"\n\t\tRegras: "<<std::endl;
+    SetConsoleTextAttribute(h,14); // amarelo
+    std::cout<<"\n\t\t  >> Forme palavras com as letras do quadro"<<std::endl;
+    std::cout<<"\t\t  >> Total de palavras depende da dificuldade"<<std::endl;
+    std::cout<<"\t\t  >> "<<NUM_ERROS_TOTAL<<" tentativas erradas terminam o jogo"<<std::endl;
+    SetConsoleTextAttribute(h,10); // verde
+    std::cout<<"\n\t\t BOA SORTE !!!\n";
 
-    std::cout<<"\n\tComandos especiais: "<<std::endl;
-    std::cout<<"\n\t  >> Digite 'limpar' para limpar a tela se quiser"<<std::endl;
-    std::cout<<"\t  >> Digite 'sair' para fechar o jogo"<<std::endl;
-    //std::cout<<"\t  >> Digite 'menuesp' para abrir o menu de creditos (obs, isso vai terminar seu jogo!)"<<std::endl;
-    std::cout<<"\n\tObs: os comandos devem ser digitados apos a escolha da dificuldade! "<<std::endl;
-    std::cout<<"\n\n    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    std::cout<<"\n\t\tComandos especiais: "<<std::endl;
+    SetConsoleTextAttribute(h,14); // amarelo
+    std::cout<<"\n\t\t  >> Digite 'limpar' para limpar a tela se quiser"<<std::endl;
+    std::cout<<"\t\t  >> Digite 'sair' para fechar o jogo"<<std::endl;
+    std::cout<<"\t  >> Digite 'creditos' para abrir o menu de creditos (obs, isso vai terminar seu jogo!)"<<std::endl;
+    SetConsoleTextAttribute(h,10); // verde
+    std::cout<<"\n\t\tObs: os comandos devem ser digitados apos a escolha da dificuldade! "<<std::endl;
+    SetConsoleTextAttribute(h,13); // rosa
+    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    SetConsoleTextAttribute(h,15); // branco
 }
 
+
+//funcao para o menu de creditos
+void creditos()
+{
+    system("cls");
+    SetConsoleTextAttribute(h,13); // rosa
+    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    SetConsoleTextAttribute(h,14); // amarelo
+    std::cout << std::endl << R"(
+               ######  ########  ######## ########  #### ########  #######   ######  
+              ##    ## ##     ## ##       ##     ##  ##     ##    ##     ## ##    ##    ###
+              ##       ##     ## ##       ##     ##  ##     ##    ##     ## ##          ###
+              ##       ########  ######   ##     ##  ##     ##    ##     ##  ######  
+              ##       ##   ##   ##       ##     ##  ##     ##    ##     ##       ##    
+              ##    ## ##    ##  ##       ##     ##  ##     ##    ##     ## ##    ##    ###
+               ######  ##     ## ######## ########  ####    ##     #######   ######     ###
+                                                                   
+    )" << '\n';
+    SetConsoleTextAttribute(h,9); // azul
+    std::cout << std::endl << R"(
+              ___       _   _                 __   __            _           
+             / _ \     | | | |                \ \ / /           (_)          
+            / /_\ \_ __| |_| |__  _   _ _ __   \ V /  __ ___   ___  ___ _ __ 
+            |  _  | '__| __| '_ \| | | | '__|  /   \ / _` \ \ / / |/ _ \ '__|
+            | | | | |  | |_| | | | |_| | |    / /^\ \ (_| |\ V /| |  __/ |   
+            \_| |_/_|   \__|_| |_|\__,_|_|    \/   \/\__,_| \_/ |_|\___|_|   
+                                                                   
+    )" << '\n';
+    SetConsoleTextAttribute(h,13); // rosa
+    std::cout << std::endl << R"(
+            ______            _     _  ___  ___                           _ 
+            |  _  \          (_)   | | |  \/  |                          (_)
+            | | | |__ ___   ___  __| | | .  . | ___  __ _ _   _ _ __ ___  _ 
+            | | | / _` \ \ / / |/ _` | | |\/| |/ _ \/ _` | | | | '_ ` _ \| |
+            | |/ / (_| |\ V /| | (_| | | |  | |  __/ (_| | |_| | | | | | | |
+            |___/ \__,_| \_/ |_|\__,_| \_|  |_/\___|\__, |\__,_|_| |_| |_|_|
+                                                     __/ |                  
+                                                    |___/                     
+    )" << '\n';
+    SetConsoleTextAttribute(h,11); // ciano
+    std::cout << std::endl << R"(
+               ___        ____          ___  _                                       
+              |_  |      |____|        / _ \| |                                      
+                | | ___   __ _  ___   / /_\ \ |_   ____ _ _ __ ___ _ __   __ _  __ _ 
+                | |/ _ \ / _` |/ _ \  |  _  | \ \ / / _` | '__/ _ \ '_ \ / _` |/ _` |
+            /\__/ / (_) | (_| | (_) | | | | | |\ V / (_| | | |  __/ | | | (_| | (_| |
+            \____/ \___/ \__,_|\___/  \_| |_/_| \_/ \__,_|_|  \___|_| |_|\__, |\__,_|
+                                                                          __/ |      
+                                                                         |___/        
+    )" << '\n';
+    SetConsoleTextAttribute(h,12); // vermelho
+    std::cout << std::endl << R"(
+            ___  ____                  _  ___  ___                  _ _      ____               
+            |  \/  (_)                | | |  \/  |                 | | |    |____|            
+            | .  . |_  __ _ _   _  ___| | | .  . | __ _  __ _  __ _| | |__   __ _  ___  ___ 
+            | |\/| | |/ _` | | | |/ _ \ | | |\/| |/ _` |/ _` |/ _` | | '_ \ / _` |/ _ \/ __|
+            | |  | | | (_| | |_| |  __/ | | |  | | (_| | (_| | (_| | | | | | (_| |  __/\__ \
+            \_|  |_/_|\__, |\__,_|\___|_| \_|  |_/\__,_|\__, |\__,_|_|_| |_|\__,_|\___||___/
+                       __/ |                             __/ |                            
+                      |___/                             |___/                                
+    )" << '\n';
+    std::cout<<"\n\t\tObrigado por jogar! pressione 'enter' para fechar o jogo. "<<std::endl;
+    std::cin.ignore();
+    SetConsoleTextAttribute(h,15); // branco
+}
 
 
 //funcao derrota
 void derrota()
 {
-    std::cout<<"\n\n    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    SetConsoleTextAttribute(h,13); // rosa
+    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    SetConsoleTextAttribute(h,12); // vermelho
     std::cout << std::endl << R"(
-      ######                                           
-      #     # ###### #####  #####   ####  #####   ##   
-      #     # #      #    # #    # #    #   #    #  #  
-      #     # #####  #    # #    # #    #   #   #    # 
-      #     # #      #####  #####  #    #   #   ###### 
-      #     # #      #   #  #   #  #    #   #   #    # 
-      ######  ###### #    # #    #  ####    #   #    #    
+            ######                                           
+            #     # ###### #####  #####   ####  #####   ##   
+            #     # #      #    # #    # #    #   #    #  #  
+            #     # #####  #    # #    # #    #   #   #    # 
+            #     # #      #####  #####  #    #   #   ###### 
+            #     # #      #   #  #   #  #    #   #   #    # 
+            ######  ###### #    # #    #  ####    #   #    #    
     )" << '\n';
-    std::cout<<"\n\tVoce perdeu, pressione enter para fechar o jogo: "<<std::endl;
+    std::cout<<"\n\t\tVoce perdeu, pressione 'enter' para fechar o jogo. "<<std::endl;
     std::cin.ignore();
+    SetConsoleTextAttribute(h,15); // branco
 }
 
 
@@ -61,18 +140,21 @@ void derrota()
 //funcao vitoria
 void vitoria()
 {
-    std::cout<<"\n\n    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    SetConsoleTextAttribute(h,13); // rosa
+    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    SetConsoleTextAttribute(h,9); // azul
     std::cout << std::endl << R"(
-      ##     ## #### ########  #######  ########  ####    ###    
-      ##     ##  ##     ##    ##     ## ##     ##  ##    ## ##   
-      ##     ##  ##     ##    ##     ## ##     ##  ##   ##   ##  
-      ##     ##  ##     ##    ##     ## ########   ##  ##     ## 
-       ##   ##   ##     ##    ##     ## ##   ##    ##  ######### 
-        ## ##    ##     ##    ##     ## ##    ##   ##  ##     ## 
-         ###    ####    ##     #######  ##     ## #### ##     ## 
+            ##     ## #### ########  #######  ########  ####    ###    
+            ##     ##  ##     ##    ##     ## ##     ##  ##    ## ##   
+            ##     ##  ##     ##    ##     ## ##     ##  ##   ##   ##  
+            ##     ##  ##     ##    ##     ## ########   ##  ##     ## 
+             ##   ##   ##     ##    ##     ## ##   ##    ##  ######### 
+              ## ##    ##     ##    ##     ## ##    ##   ##  ##     ## 
+               ###    ####    ##     #######  ##     ## #### ##     ## 
     )" << '\n';
-    std::cout<<"\n\tParabens, voce venceu! Pressione enter para fechar o jogo: "<<std::endl;
+    std::cout<<"\n\t\tParabens, voce venceu! Pressione 'enter' para fechar o jogo. "<<std::endl;
     std::cin.ignore();
+    SetConsoleTextAttribute(h,15); // branco
 }
 
 
@@ -80,17 +162,19 @@ void vitoria()
 //saida manual pelo comando do menu
 void saidamanual()
 {
-    std::cout<<"\n\n    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    SetConsoleTextAttribute(h,13); // rosa
+    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    SetConsoleTextAttribute(h,15); // branco
     std::cout << std::endl << R"(
-      ######                                                             
-      #     # ######  ####  #  ####  ##### ###### #    #  ####  #   ##   
-      #     # #      #      # #        #   #      ##   # #    # #  #  #  
-      #     # #####   ####  #  ####    #   #####  # #  # #      # #    # 
-      #     # #           # #      #   #   #      #  # # #      # ###### 
-      #     # #      #    # # #    #   #   #      #   ## #    # # #    # 
-      ######  ######  ####  #  ####    #   ###### #    #  ####  # #    # 
+            ######                                                             
+            #     # ######  ####  #  ####  ##### ###### #    #  ####  #   ##   
+            #     # #      #      # #        #   #      ##   # #    # #  #  #  
+            #     # #####   ####  #  ####    #   #####  # #  # #      # #    # 
+            #     # #           # #      #   #   #      #  # # #      # ###### 
+            #     # #      #    # # #    #   #   #      #   ## #    # # #    # 
+            ######  ######  ####  #  ####    #   ###### #    #  ####  # #    # 
     )" << '\n';
-    std::cout<<"\n\tVoce escolheu sair do jogo. Pressione enter para fechar o jogo: "<<std::endl;
+    std::cout<<"\n\t\tVoce escolheu sair do jogo. Pressione 'enter' para fechar o jogo. "<<std::endl;
     std::cin.ignore();
 }
 
@@ -99,10 +183,12 @@ void saidamanual()
 //funcao que imprime o quadro de letras toda vez que eh chamada:
 void quadro_palavras(char pl[])
 {
-    std::cout<<"\n        Quadro de letras: "<<std::endl;
+    SetConsoleTextAttribute(h,15); // branco
+    std::cout<<"\n\t        Quadro de letras: "<<std::endl;
+    SetConsoleTextAttribute(h,9); // azul
     for (int i=0; i<25; i++)
     {
-        if (i % 5 == 0){std::cout<<"\n        ";}
+        if (i % 5 == 0){std::cout<<"\n\t        ";}
         std::cout<<std::setw(5)<<pl[i];
     }
 
@@ -126,15 +212,18 @@ void validainput(char input[], int n)
 
     do
     {
+        SetConsoleTextAttribute(h,11); // ciano
         //impede casos de cin.fail (so por precaucao):
-        std::cout<<"\n        > Tentativa " << n << ": ";
+        std::cout<<"\n\t        > Tentativa " << n << ": ";
         std::cin.getline(input,12);
         while (std::cin.fail())
         {
-            std::cout<<"\n        >> Erro de entrada, tente novamente.";
+            SetConsoleTextAttribute(h,12); // vermelho
+            std::cout<<"\n\t        >> Erro de entrada, tente novamente.";
             std::cin.clear();
             std::cin.ignore(9999, '\n');
-            std::cout <<"\n        > Tentativa " << n << ": ";
+            SetConsoleTextAttribute(h,11); // ciano
+            std::cout <<"\n\n\t        > Tentativa " << n << ": ";
             std::cin.getline(input,12); ;
         }
    
@@ -152,7 +241,10 @@ void validainput(char input[], int n)
         }
 
         if (caractere==1)
-            std::cout<<"\n        >> Insira apenas caracteres validos, tente novamente.\n";
+        {
+            SetConsoleTextAttribute(h,12); // vermelho
+            std::cout<<"\n\t        >> Insira apenas caracteres validos, tente novamente.\n";
+        }
     } while (caractere==1);   
 }
 
@@ -201,28 +293,37 @@ int main()
     //menu inicial:
     cabecalho_anagrama();
     //SELEÇÃO MODO DE JOGO:
-    std::cout << "\n\n\tDeseja jogar em qual modo?" << std::endl;
-    std::cout << "\n\t>> 1 - Facil (10 acertos)" << std::endl;
-    std::cout << "\t>> 2 - Medio (20 acertos)" << std::endl;
-    std::cout << "\t>> 3 - Dificil (30 acertos)" << std::endl;
+    SetConsoleTextAttribute(h,10); // verde
+    std::cout << "\n\n\t\tDeseja jogar em qual modo?" << std::endl;
+    SetConsoleTextAttribute(h,14); // amarelo
+    std::cout << "\n\t\t>> 1 - Facil (10 acertos)" << std::endl;
+    std::cout << "\t\t>> 2 - Medio (20 acertos)" << std::endl;
+    std::cout << "\t\t>> 3 - Dificil (30 acertos)" << std::endl;
     //validacao de entrada:
     do
     {
         //impede casos de cin.fail (so por precaucao):
-        std::cout << "\n\t  > Digite 1, 2 ou 3 para selecionar: ";
+        SetConsoleTextAttribute(h,11); // ciano
+        std::cout << "\n\t\t  > Digite 1, 2 ou 3 para selecionar: ";
         std::cin >> modo;
         while (std::cin.fail())
         {
-            std::cout<<"\n        >> Erro de entrada, tente novamente.\n";
+            SetConsoleTextAttribute(h,12); // vermelho
+            std::cout<<"\n\t        >> Erro de entrada, tente novamente.";
             std::cin.clear();
             std::cin.ignore(9999, '\n');
-            std::cout << "\n\t  > Digite 1, 2 ou 3 para selecionar: ";
+            SetConsoleTextAttribute(h,11); // ciano
+            std::cout << "\n\n\t\t  > Digite 1, 2 ou 3 para selecionar: ";
             std::cin >> modo;
         }
         //validacao de tamanho
         if (modo < 1 || modo>3)
-            std::cout<<"\n        >> Insira apenas valores de 1 a 3!\n";
+        {
+            SetConsoleTextAttribute(h,12); // vermelho
+            std::cout<<"\n\t        >> Insira apenas valores de 1 a 3!\n";
+        }
     } while (modo < 1 || modo>3);   
+    SetConsoleTextAttribute(h,15); // branco
     
     if (modo == 1) acertosmax = 10;
     if (modo == 2) acertosmax = 20;
@@ -236,14 +337,41 @@ int main()
     {
         vit = 0;
         indicador = 0;
+
+        //quadro de letras e placar de erros/acertos
         quadro_palavras(caracter);
-        std::cout << "\n\n        >>> Acertos (" << num_acertos << " de " << acertosmax << ") e Erros (" << num_erros << " de " << NUM_ERROS_TOTAL << ")" << std::endl;
+        SetConsoleTextAttribute(h,14); // amarelo
+        std::cout << "\n\n\t        >>>";
+        SetConsoleTextAttribute(h,10); // verde
+        std::cout << " Acertos ";
+        SetConsoleTextAttribute(h,14); // amarelo
+        std::cout <<"(";
+        SetConsoleTextAttribute(h,10); // verde
+        std::cout << num_acertos;
+        SetConsoleTextAttribute(h,14); // amarelo
+        std::cout << " de " << acertosmax << ") e " ;
+        SetConsoleTextAttribute(h,12); // vermelho
+        std::cout << "Erros " << num_erros;
+        SetConsoleTextAttribute(h,14); // amarelo
+        std::cout <<" (";
+        SetConsoleTextAttribute(h,12); // vermelho
+        std::cout << num_erros;
+        SetConsoleTextAttribute(h,14); // amarelo
+        std::cout << " de " << NUM_ERROS_TOTAL<<")";
+
          //IMPRESSÃO BANCO DE ACERTOS
         if (num_acertos > 0)
         {
-            std::cout << "\n        >>> Banco de acertos:" << std::endl;
+            SetConsoleTextAttribute(h,14); // amarelo
+            std::cout << "\n\t        >>> Banco de acertos:" << std::endl;
             for (i = 0; i < num_acertos; i++)
-                std::cout << "         >> Palavra " << i+1 << ": " << b_acertos[i] << std::endl;
+            {
+                std::cout << "\t         >>";
+                SetConsoleTextAttribute(h,15); // branco
+                std::cout << " Palavra " << i+1 << ": "; 
+                SetConsoleTextAttribute(h,10); // verde
+                std::cout << b_acertos[i] << std::endl;
+            }
         }
         //leitura da resposta:
         std::cout<<'\n';
@@ -255,9 +383,16 @@ int main()
         {
             limpa_tela();        
         }
+        //sai do jogo
         else if (strcmp(resposta, "sair")==0)
         {
             vit = 2;
+            break;
+        }
+        //mostra creditos
+        else if (strcmp(resposta, "creditos")==0)
+        {
+            vit = 3;
             break;
         }
         //segue com o jogo:
@@ -290,16 +425,19 @@ int main()
                 {
                 //erro        
                 case 1:
-                    std::cout << "\n        >> Resposta errada! \n";
+                    SetConsoleTextAttribute(h,12); // vermelho
+                    std::cout << "\n\t        >> Resposta errada! \n";
                     num_erros++;
                     break;
                 //repetido
                 case 2:
-                    std::cout << "\n        >> Resposta repetida! \n";
+                    SetConsoleTextAttribute(h,14); // amarelo
+                    std::cout << "\n\t        >> Resposta repetida! \n";
                     break;
                 //acerto
                 default:
-                    std::cout << "\n        >> Resposta certa! (+ respect)\n";
+                    SetConsoleTextAttribute(h,10); // verde
+                    std::cout << "\n\t        >> Resposta certa! (+ respect)\n";
                     strcpy(b_acertos[num_acertos], resposta);
                     num_acertos++;
                     break;
@@ -318,10 +456,11 @@ int main()
     //MENSAGEM FINAL DO JOGO
     if (vit == 1)
         vitoria();
-    if (vit == 0)
+    else if (vit == 0)
         derrota();
-    else 
+    else if (vit == 2)
         saidamanual();
-
+    else
+        creditos();
     return 0; 
 }
