@@ -4,6 +4,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #define NUM_ERROS_TOTAL 5
+#define TAMANHO_BANCO 123
 
 
 //funcao que imprime o cabecalho do jogo
@@ -30,11 +31,13 @@ void cabecalho_anagrama(){
 
     std::cout<<"\n\tComandos especiais: "<<std::endl;
     std::cout<<"\n\t  >> Digite 'limpar' para limpar a tela se quiser"<<std::endl;
-    std::cout<<"\t  >> Digite 'sairjogo' para fechar o jogo"<<std::endl;
+    std::cout<<"\t  >> Digite 'sair' para fechar o jogo"<<std::endl;
     //std::cout<<"\t  >> Digite 'menuesp' para abrir o menu de creditos (obs, isso vai terminar seu jogo!)"<<std::endl;
     std::cout<<"\n\tObs: os comandos devem ser digitados apos a escolha da dificuldade! "<<std::endl;
     std::cout<<"\n\n    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
 }
+
+
 
 //funcao derrota
 void derrota()
@@ -53,6 +56,8 @@ void derrota()
     std::cin.ignore();
 }
 
+
+
 //funcao vitoria
 void vitoria()
 {
@@ -69,6 +74,8 @@ void vitoria()
     std::cout<<"\n\tParabens, voce venceu! Pressione enter para fechar o jogo: "<<std::endl;
     std::cin.ignore();
 }
+
+
 
 //saida manual pelo comando do menu
 void saidamanual()
@@ -87,6 +94,8 @@ void saidamanual()
     std::cin.ignore();
 }
 
+
+
 //funcao que imprime o quadro de letras toda vez que eh chamada:
 void quadro_palavras(char pl[])
 {
@@ -98,6 +107,8 @@ void quadro_palavras(char pl[])
     }
 
 }
+
+
 
 //funcao para limpar a tela:
 void limpa_tela()
@@ -144,6 +155,8 @@ void validainput(char input[], int n)
             std::cout<<"\n        >> Insira apenas caracteres validos, tente novamente.\n";
     } while (caractere==1);   
 }
+
+
 
 //funcao main do programa:
 int main()
@@ -225,6 +238,13 @@ int main()
         indicador = 0;
         quadro_palavras(caracter);
         std::cout << "\n\n        >>> Acertos (" << num_acertos << " de " << acertosmax << ") e Erros (" << num_erros << " de " << NUM_ERROS_TOTAL << ")" << std::endl;
+         //IMPRESSÃO BANCO DE ACERTOS
+        if (num_acertos > 0)
+        {
+            std::cout << "\n        >>> Banco de acertos:" << std::endl;
+            for (i = 0; i < num_acertos; i++)
+                std::cout << "         >> Palavra " << i+1 << ": " << b_acertos[i] << std::endl;
+        }
         //leitura da resposta:
         std::cout<<'\n';
         validainput(resposta, n);
@@ -235,9 +255,10 @@ int main()
         {
             limpa_tela();        
         }
-        else if (strcmp(resposta, "sairjogo")==0)
+        else if (strcmp(resposta, "sair")==0)
         {
-
+            vit = 2;
+            break;
         }
         //segue com o jogo:
         else
@@ -252,7 +273,7 @@ int main()
                 }
                 }
                 //COMPARAR COM O Banco de palavras:
-                for (i = 0; i < 123; i++)
+                for (i = 0; i < TAMANHO_BANCO; i++)
                 {
                     //se for repetida (ou o comando para sair) ja pula o processo repetitivo
                     if (indicador >= 2 ) break;
@@ -264,23 +285,22 @@ int main()
                     }
                     else indicador = 1;
                 } 
-       
+                //Casos de indicador:
                 switch (indicador)
                 {
-
+                //erro        
                 case 1:
                     std::cout << "\n        >> Resposta errada! \n";
                     num_erros++;
                     break;
-
+                //repetido
                 case 2:
                     std::cout << "\n        >> Resposta repetida! \n";
                     break;
-
+                //acerto
                 default:
                     std::cout << "\n        >> Resposta certa! (+ respect)\n";
                     strcpy(b_acertos[num_acertos], resposta);
-                    std::cout << "\n        >> Resposta certa: ", b_acertos[num_acertos];
                     num_acertos++;
                     break;
                 }
