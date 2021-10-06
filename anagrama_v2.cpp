@@ -461,6 +461,7 @@ int main()
                     {
                         SetConsoleTextAttribute(h,12); // vermelho
                         std::cout << "\n\t        >> Duas repetidas, + 1 erro! \n";
+                        num_erros++;
                         repetido = 0;
                     }
                     else
