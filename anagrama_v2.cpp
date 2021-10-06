@@ -135,7 +135,7 @@ void validainput(char input[], int n)
             if (input[i]<97 || input[i]>122)
             {
                 caractere = 1;
-                i=tamanho;
+                break;
             }
             else caractere = 0;
         }
@@ -179,7 +179,7 @@ int main()
     "rica", "rico", "roncar", "ronco", "tala", "talar", "tenda", "tendao" };
 
     //banco de acertos
-    char b_acertos[20][12];
+    char b_acertos[30][12];
 
     
     //jogo:
@@ -222,72 +222,77 @@ int main()
     while (num_erros<5)
     {
         vit = 0;
-        indicador = 3;
-        
+        indicador = 0;
         quadro_palavras(caracter);
         std::cout << "\n\n        >>> Acertos (" << num_acertos << " de " << acertosmax << ") e Erros (" << num_erros << " de " << NUM_ERROS_TOTAL << ")" << std::endl;
-        
         //leitura da resposta:
         std::cout<<'\n';
         validainput(resposta, n);
-
+       
         //checa se eh um comando do menu:
         //limpa tela
         if (strcmp(resposta, "limpar") == 0)
         {
             limpa_tela();        
         }
+        else if (strcmp(resposta, "sairjogo")==0)
+        {
 
+        }
         //segue com o jogo:
         else
-        {
-            //fecha jogo
-            if (strcmp(resposta, "sairjogo")==0)
+        {           
+            //CHECAR SE É REPETIDO:
+            for (i = 0; i < num_acertos; i++)
             {
-                vit = 2;
-                num_erros = 5;
-            }
-            else
+                if (strcmp(resposta, b_acertos[i]) == 0)
                 {
-                //CHECAR SE É REPETIDO:
-                for (i = 0; i < num_acertos; i++)
-                {
-                    if (strcmp(resposta, b_acertos[i]) == 0) 
-                        indicador = 2;
+                    indicador = 2;
+                    break;
                 }
-
+                }
                 //COMPARAR COM O Banco de palavras:
                 for (i = 0; i < 123; i++)
                 {
-                    //se for repetida ja pula o processo repetitivo
-                    if (indicador == 2) i = 123;
+                    //se for repetida (ou o comando para sair) ja pula o processo repetitivo
+                    if (indicador >= 2 ) break;
                     //IF CORRETO E ERRADO
                     if (strcmp(resposta, banco_palavra[i]) == 0)
                     {
-                    //Se correto ja acrescenta no de acertos e copia pro banco de acertos
-                        num_acertos++;
                         indicador = 0;
-                        i = 123;
+                        break;
                     }
                     else indicador = 1;
                 } 
-        
-                //impressão de mensagens e erros++:
-                //errado
-                if (indicador==1) {std::cout<<"\n        >> Resposta errada! \n"; num_erros++;}   
-                //repetido
-                else if (indicador==2)        std::cout<<"\n        >> Resposta repetida! \n";
-                //certo
-                else    std::cout<<"\n        >> Resposta certa! (+ respect)\n";
+       
+                switch (indicador)
+                {
+
+                case 1:
+                    std::cout << "\n        >> Resposta errada! \n";
+                    num_erros++;
+                    break;
+
+                case 2:
+                    std::cout << "\n        >> Resposta repetida! \n";
+                    break;
+
+                default:
+                    std::cout << "\n        >> Resposta certa! (+ respect)\n";
+                    strcpy(b_acertos[num_acertos], resposta);
+                    std::cout << "\n        >> Resposta certa: ", b_acertos[num_acertos];
+                    num_acertos++;
+                    break;
+                }
 
                 //caso de vitoria:
                 if (num_acertos == acertosmax) 
                 {
                     vit = 1;
-                    num_erros = 5;
+                    break;
                 }
                 n++;
-            }
+         
         }
     }
     //MENSAGEM FINAL DO JOGO
