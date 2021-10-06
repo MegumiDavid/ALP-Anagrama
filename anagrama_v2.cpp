@@ -40,11 +40,11 @@ void cabecalho_anagrama(){
     SetConsoleTextAttribute(h,14); // amarelo
     std::cout<<"\n\t\t  >> Digite 'limpar' para limpar a tela se quiser"<<std::endl;
     std::cout<<"\t\t  >> Digite 'sair' para fechar o jogo"<<std::endl;
-    std::cout<<"\t  >> Digite 'creditos' para abrir o menu de creditos (obs, isso vai terminar seu jogo!)"<<std::endl;
+    std::cout<<"\t\t  >> Digite 'creditos' para abrir o menu de creditos (obs, isso vai terminar seu jogo!)"<<std::endl;
     SetConsoleTextAttribute(h,10); // verde
     std::cout<<"\n\t\tObs: os comandos devem ser digitados apos a escolha da dificuldade! "<<std::endl;
     SetConsoleTextAttribute(h,13); // rosa
-    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    std::cout<<"\n\n\t   =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
     SetConsoleTextAttribute(h,15); // branco
 }
 
@@ -54,7 +54,7 @@ void creditos()
 {
     system("cls");
     SetConsoleTextAttribute(h,13); // rosa
-    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    std::cout<<"\n\n\t   =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
     SetConsoleTextAttribute(h,14); // amarelo
     std::cout << std::endl << R"(
                ######  ########  ######## ########  #### ########  #######   ######  
@@ -119,7 +119,7 @@ void creditos()
 void derrota()
 {
     SetConsoleTextAttribute(h,13); // rosa
-    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    std::cout<<"\n\n\t   =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
     SetConsoleTextAttribute(h,12); // vermelho
     std::cout << std::endl << R"(
             ######                                           
@@ -141,7 +141,7 @@ void derrota()
 void vitoria()
 {
     SetConsoleTextAttribute(h,13); // rosa
-    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    std::cout<<"\n\n\t   =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
     SetConsoleTextAttribute(h,9); // azul
     std::cout << std::endl << R"(
             ##     ## #### ########  #######  ########  ####    ###    
@@ -163,7 +163,7 @@ void vitoria()
 void saidamanual()
 {
     SetConsoleTextAttribute(h,13); // rosa
-    std::cout<<"\n\n\t    =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
+    std::cout<<"\n\n\t   =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
     SetConsoleTextAttribute(h,15); // branco
     std::cout << std::endl << R"(
             ######                                                             
@@ -181,7 +181,7 @@ void saidamanual()
 
 
 //funcao que imprime o quadro de letras toda vez que eh chamada:
-void quadro_palavras(char pl[])
+void quadro_letras(char pl[])
 {
     SetConsoleTextAttribute(h,15); // branco
     std::cout<<"\n\t        Quadro de letras: "<<std::endl;
@@ -339,7 +339,7 @@ int main()
         indicador = 0;
 
         //quadro de letras e placar de erros/acertos
-        quadro_palavras(caracter);
+        quadro_letras(caracter);
         SetConsoleTextAttribute(h,14); // amarelo
         std::cout << "\n\n\t        >>>";
         SetConsoleTextAttribute(h,10); // verde
@@ -373,10 +373,11 @@ int main()
                 std::cout << b_acertos[i] << std::endl;
             }
         }
+        
+        
         //leitura da resposta:
         std::cout<<'\n';
         validainput(resposta, n);
-       
         //checa se eh um comando do menu:
         //limpa tela
         if (strcmp(resposta, "limpar") == 0)
