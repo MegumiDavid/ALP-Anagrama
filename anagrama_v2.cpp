@@ -33,7 +33,7 @@ void cabecalho_anagrama(){
     std::cout<<"\n\t\t  >> Forme palavras com as letras do quadro"<<std::endl;
     std::cout<<"\t\t  >> Total de palavras depende da dificuldade"<<std::endl;
     std::cout<<"\t\t  >> "<<NUM_ERROS_TOTAL<<" tentativas erradas terminam o jogo"<<std::endl;
-    //std::cout<<"\t\t  >> Duas palavras repetidas contam como um erro"<<std::endl;
+    std::cout<<"\t\t  >> Duas palavras repetidas contam como um erro. O contador reseta depois do erro, entao atencao!"<<std::endl;
     SetConsoleTextAttribute(h,10); // verde
     std::cout<<"\n\t\t BOA SORTE !!!\n";
 
@@ -55,8 +55,6 @@ void cabecalho_anagrama(){
 void creditos()
 {
     system("cls");
-    SetConsoleTextAttribute(h,13); // rosa
-    std::cout<<"\n\n\t   =/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/=/="<<std::endl;
     SetConsoleTextAttribute(h,14); // amarelo
     std::cout << std::endl << R"(
                ######  ########  ######## ########  #### ########  #######   ######  
@@ -274,7 +272,7 @@ int main()
     //declaracaoo de variáveis:
     
     //int i usada para repeticoes 'for' e n para o loop do jogo 
-    int i, n = 1, indicador, vit, modo, acertosmax = 0;
+    int i, n = 1, indicador, vit, modo, acertosmax = 0, repetido = 0;
     char resposta[12];
 
     // Controla acertos/erros
@@ -428,6 +426,7 @@ int main()
                 if (strcmp(resposta, b_acertos[i]) == 0)
                 {
                     indicador = 2;
+                    repetido++;
                     break;
                 }
                 }
@@ -455,8 +454,17 @@ int main()
                     break;
                 //repetido
                 case 2:
-                    SetConsoleTextAttribute(h,14); // amarelo
-                    std::cout << "\n\t        >> Resposta repetida! \n";
+                    if (repetido==2)
+                    {
+                        SetConsoleTextAttribute(h,12); // vermelho
+                        std::cout << "\n\t        >> Duas repetidas, + 1 erro! \n";
+                        repetido = 0;
+                    }
+                    else
+                    {
+                        SetConsoleTextAttribute(h,14); // amarelo
+                        std::cout << "\n\t        >> Resposta repetida! \n";        
+                    }
                     break;
                 //acerto
                 default:
