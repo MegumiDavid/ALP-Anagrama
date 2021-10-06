@@ -315,12 +315,14 @@ int main()
     std::cout << "\n\t\t>> 1 - Facil (10 acertos)" << std::endl;
     std::cout << "\t\t>> 2 - Medio (20 acertos)" << std::endl;
     std::cout << "\t\t>> 3 - Dificil (30 acertos)" << std::endl;
+    SetConsoleTextAttribute(h,12); // vermelho
+    std::cout << "\t\t>> 4 - MUITO DIFICIL (100 acertos)" << std::endl;
     //validacao de entrada:
     do
     {
         //impede casos de cin.fail (so por precaucao):
         SetConsoleTextAttribute(h,11); // ciano
-        std::cout << "\n\t\t  > Digite 1, 2 ou 3 para selecionar: ";
+        std::cout << "\n\t\t  > Digite 1, 2, 3 ou 4 para selecionar: ";
         std::cin >> modo;
         while (std::cin.fail())
         {
@@ -329,21 +331,22 @@ int main()
             std::cin.clear();
             std::cin.ignore(9999, '\n');
             SetConsoleTextAttribute(h,11); // ciano
-            std::cout << "\n\n\t\t  > Digite 1, 2 ou 3 para selecionar: ";
+            std::cout << "\n\n\t\t  > Digite 1, 2, 3 ou 4 para selecionar: ";
             std::cin >> modo;
         }
         //validacao de tamanho
-        if (modo < 1 || modo>3)
+        if (modo < 1 || modo>4)
         {
             SetConsoleTextAttribute(h,12); // vermelho
-            std::cout<<"\n\t        >> Insira apenas valores de 1 a 3!\n";
+            std::cout<<"\n\t        >> Insira apenas valores de 1 a 4!\n";
         }
-    } while (modo < 1 || modo>3);   
+    } while (modo < 1 || modo>4);   
     SetConsoleTextAttribute(h,15); // branco
     
     if (modo == 1) acertosmax = 10;
     if (modo == 2) acertosmax = 20;
     if (modo == 3) acertosmax = 30;
+    if (modo == 4) acertosmax = 100;
     limpa_tela();
     std::cin.ignore();
     
