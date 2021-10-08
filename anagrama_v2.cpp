@@ -385,6 +385,7 @@ int main()
             std::cout << "\n\t        >>> Banco de acertos:" << std::endl;
             for (i = 0; i < num_acertos; i++)
             {
+                SetConsoleTextAttribute(h,14); // amarelo
                 std::cout << "\t         >>";
                 SetConsoleTextAttribute(h,15); // branco
                 std::cout << " Palavra " << i+1 << ": "; 
