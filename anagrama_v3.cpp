@@ -176,7 +176,7 @@ int main()
                 break;
             }
             //comando secreto 3
-            else if (strcmp(resposta, "faccamp")==0)
+            else if (strcmp(resposta, "faccamp")==0||strcmp(resposta, "mackenzie")==0||strcmp(resposta, "unip")==0)
             {
                 vit = 3;
                 secreto = 2;
