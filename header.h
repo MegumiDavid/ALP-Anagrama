@@ -333,7 +333,7 @@ void faccamp(int& continua)
     )" << '\n';
     do
     {
-        valida_int(continua,"\n\t\t>>> HAHAHAHAHAHAHAHA, SERIO ISSO? Deseja continuar jogando? (digite 1 para sim, 2 para nao) ");
+        valida_int(continua,"\n\t\t>>> NAO!! Deseja continuar jogando? (digite 1 para sim, 2 para nao) ");
         if(continua<1 || continua>2)
         {
             SetConsoleTextAttribute(h,12); // vermelho
