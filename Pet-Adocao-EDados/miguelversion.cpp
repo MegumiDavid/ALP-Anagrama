@@ -1,11 +1,11 @@
 /*
 [x] 1 - Inclusão de novos animais;
 [x] 2 - Remoção de animais;
-[ ] 3 - Alteração de informações;
+[x] 3 - Alteração de informações;
 [x] 4 - Busca de um animal a partir do seu nome;
 [x] 5 - Busca de animais por espécie;
 [x] 6 - Busca de animais por espécie e raça;
-[ ] 7 - Busca de animais por espécie, raça e sexo;
+[x] 7 - Busca de animais por espécie, raça e sexo;
 [x] 8 - Contagem (quantidade de animais);
 [x] 9 - Contagem por espécie;
 [x] 10 - Listagem de todos os animais cadastrados.
@@ -167,8 +167,16 @@ void remove_no(int cod, no **lista){
 }
 
 //funcao 3 - altera
-/*void altera(no *lista, int cod){
-    int opcao, codigo;
+void altera(no *lista, int cod){
+    //seleciona o item da lista
+    while (lista != NULL)
+    {
+        if (lista->codigo == cod)
+            break;
+        lista = lista->prox;
+    }
+    char nom[TAM], esp[TAM], rac[TAM], carc_g[TAM];
+    int opcao, codigo, checa, idd;
     do{
         cout<<"\nAlterar quais informacoes?\n";
         cout<<"==========================================\n";
@@ -183,36 +191,58 @@ void remove_no(int cod, no **lista){
         
         valida_int(opcao,"\nDigite a opcao: ");
         cin.ignore();
-        switch(opcao){
+        switch(opcao)
+        {
             case 1:     
-                
+                valida_int(codigo, "Novo codigo de cadastro: ");
+                checa = checa_cod(lista, cod);
+                if (checa == 0)
+                    cout<<"Codigo de cadastro ja existe na lista, selecione outro codigo!\n";
+                else 
+                {
+                    lista->codigo = codigo;
+                    cout<<"Codigo de cadastro alterado com sucesso.\n";
+                }
                 break;
             case 2:
-                
+                validastring(nom,"Nome: ");
+                strcpy(lista->nome, nom);
+                cout<<"Nome alterado com sucesso.\n";
                 break;
             case 3:
-        
+                validastring(esp,"Especie: ");
+                strcpy(lista->especie, esp);
+                cout<<"Especie alterada com sucesso.\n";
                 break;
             case 4: 
-
+                    validastring(rac,"Raca: ");
+                    strcpy(lista->raca, rac);
+                    cout<<"Raca alterada com sucesso.\n";
                 break;
             case 5:
-
+                if(strcmp(lista->sexo,"masculino")==0)
+                    strcpy(lista->sexo, "feminino");
+                else strcpy(lista->sexo, "masculino");
+                cout<<"Sexo alterado com sucesso.\n";
                 break;
             case 6:
-
+                do
+                {
+                    valida_int(idd, "Idade: "); 
+                    if (idd<0||idd>100) cout<<"Insira apenas idades entre 0 e 100 anos!\n";
+                }while(idd<0||idd>100);
+                lista->idade = idd;
+                cout<<"Idade alterada com sucesso.\n";
                 break; 
-            case 8: 
-
+            case 7: 
+                validastring(carc_g,"Caracteristicas gerais: ");
+                strcpy(lista->carc_gerais, carc_g);
+                cout<<"Caracteristicas gerais alteradas com sucesso.\n";
                 break;
-            case 9: 
-
-                break;
-            case 10: imprime_todos(lista); break;
         }
     }while(opcao!=0);
 
-}*/
+}
 
 // funcao 4 - busca nome
 void procura_nome(no *lista, char *nom){
@@ -236,7 +266,7 @@ void procura_nome(no *lista, char *nom){
 }}
 
 // funcao 5 - busca especie
-void procura_especie(no *lista, char *esp){
+void procura_especie(no *lista, char esp[]){
     int x = 0;
     while (lista != NULL){
         if (strcmp(lista->especie,esp) == 0){
@@ -257,12 +287,32 @@ void procura_especie(no *lista, char *esp){
 }}
 
 // funcao 6 - busca especie e raça
-void procura_especie_raca(no *lista, char *esp, char *rac){
+void procura_especie_raca(no *lista,  char esp[], char rac[]){
     int x = 0;
     while (lista != NULL){
         if (strcmp(lista->especie,esp) == 0 && strcmp(lista->raca,rac) == 0){
             x = 1;
             cout<<esp<<" + "<<rac<<" - ENCONTRADO com sucesso"<<endl;
+            cout<<"==========================================\n";
+            cout<<"Nome: "<<lista->nome<<endl;
+            cout<<"Sexo: "<<lista->sexo<<endl;
+            cout<<"Idade: "<<lista->idade<<endl;
+            cout<<"Caracteristicas gerais: "<<lista->carc_gerais<<endl<<endl;
+        }
+        lista = lista->prox;
+    }
+    if(x==0){
+        cout<<esp<<" + "<<rac<<" - NÃO foi ENCONTRADO"<<endl;
+        cout<<"==========================================\n";
+}}
+
+// funcao 7 - busca especie, raça e sexo
+void procura_especie_raca_sexo(no *lista, char esp[], char rac[], char sex[]){
+    int x = 0;
+    while (lista != NULL){
+        if (strcmp(lista->especie,esp) == 0 && strcmp(lista->raca,rac) == 0 && strcmp(lista->sexo,sex) == 0){
+            x = 1;
+            cout<<esp<<" + "<<rac<<" + "<<sex<<" - ENCONTRADO com sucesso"<<endl;
             cout<<"==========================================\n";
             cout<<"Nome: "<<lista->nome<<endl;
             cout<<"Sexo: "<<lista->sexo<<endl;
@@ -317,8 +367,8 @@ void imprime_todos(no* lista){
 
 int main()
 {
-    int opcao, cod, idd, checa;
-    char nom[TAM], esp[TAM], rac[TAM];// sex[TAM];
+    int opcao, cod, idd, checa, errosex = 1;
+    char nom[TAM], esp[TAM], rac[TAM], sex[TAM];
     cout<<"      DavidPet - Adoção de Animais\n";
     cout<<"==========================================\n\n";
     
@@ -328,9 +378,11 @@ int main()
         cout<<"==========================================\n";
         cout<<"1 - Inclusao de novos animais\n";
         cout<<"2 - Remover animal\n";
+        cout<<"3 - Alterar informacoes de um cadastro\n";
         cout<<"4 - Busca de um animal a partir do seu nome\n";
         cout<<"5 - Busca de animais por especie\n";
         cout<<"6 - Procurar o animal pela especie e raca\n";
+        cout<<"7 - Procurar o animal pela especie, raca, sexo\n";
         cout<<"8 - Contagem (quantidade de animais)\n";
         cout<<"9 - Contagem por especie\n";
         cout<<"10 - Listagem de todos os animais cadastrados\n";
@@ -351,13 +403,13 @@ int main()
                     cout<<"Codigo de cadastro nao existe na lista, selecione outro codigo!\n";
                 break;
             case 3:
-                /* valida_int(cod, "\nCodigo de cadastro do animal cujas informacoes serao alteradas: "); 
+                valida_int(cod, "\nCodigo de cadastro do animal cujas informacoes serao alteradas: "); 
                 checa = checa_cod(lista, cod);
                 if (checa == 0)
                     altera(lista, cod);
                 else 
                     cout<<"Codigo de cadastro nao existe na lista, selecione outro codigo!\n";                
-                break;*/
+                break;
             case 4: 
                 validastring(nom,"Nome: ");
                 procura_nome(lista,nom);
@@ -370,6 +422,33 @@ int main()
                 validastring(esp,"Especie: ");
                 validastring(rac,"Raca: ");
                 procura_especie_raca(lista,esp,rac);
+                break; 
+            case 7:
+                validastring(esp,"Especie: ");
+                validastring(rac,"Raca: ");
+                do
+                {
+                    validastring(sex,"Sexo ('masculino' ou 'feminino'): "); 
+                    int tamanho = strlen(sex);
+                    for (int i = 0; i < tamanho; i++)
+                    {
+                        sex[i] = tolower(sex[i]);
+                        if (sex[i]<97 || sex[i]>122)
+                        {
+                            cout<<"Insira apenas caracteres validos!\n";
+                            errosex = 1;
+                            break;
+                        }
+                    }
+                    if (strcmp(sex,"masculino")== 0 || strcmp(sex,"feminino")==0) 
+                        errosex = 0;
+                    else 
+                        {
+                            errosex = 1;
+                            cout<<"Insira apenas 'masculino' ou 'feminino'!\n";
+                        }
+                    } while (errosex==1); 
+                    procura_especie_raca_sexo(lista,esp,rac,sex);
                 break; 
             case 8: 
                 cout<<"Numero de animais: "<<conta_animal(lista)<<"\n\n\n";
