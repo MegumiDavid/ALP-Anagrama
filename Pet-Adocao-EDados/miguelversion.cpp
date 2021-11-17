@@ -244,6 +244,28 @@ void altera(no *lista, int cod){
 
 }
 
+// funcao 4 - busca codigo
+void procura_codigo(no *lista, int cod){
+    int x = 0;
+    while (lista != NULL){
+        if (lista->codigo == cod){
+            x = 1;
+            cout<<"\n\n"<<cod<<" - ENCONTRADO com sucesso"<<endl;
+            cout<<"==========================================\n";
+            cout<<"Nome: "<<lista->nome<<endl;
+            cout<<"Especie: "<<lista->especie<<endl;
+            cout<<"Raça: "<<lista->raca<<endl;
+            cout<<"Sexo: "<<lista->sexo<<endl;
+            cout<<"Idade: "<<lista->idade<<endl;
+            cout<<"Caracteristicas gerais: "<<lista->carc_gerais<<endl<<endl;
+        }
+        lista = lista->prox;
+    }
+    if(x==0){
+        cout<<cod<<" - NÃO foi ENCONTRADO"<<endl;
+        cout<<"==========================================\n";
+}}
+
 // funcao 4 - busca nome
 void procura_nome(no *lista, char *nom){
     int x = 0;
@@ -379,13 +401,14 @@ int main()
         cout<<"1 - Inclusao de novos animais\n";
         cout<<"2 - Remover animal\n";
         cout<<"3 - Alterar informacoes de um cadastro\n";
-        cout<<"4 - Busca de um animal a partir do seu nome\n";
-        cout<<"5 - Busca de animais por especie\n";
-        cout<<"6 - Procurar o animal pela especie e raca\n";
-        cout<<"7 - Procurar o animal pela especie, raca, sexo\n";
-        cout<<"8 - Contagem (quantidade de animais)\n";
-        cout<<"9 - Contagem por especie\n";
-        cout<<"10 - Listagem de todos os animais cadastrados\n";
+        cout<<"4 - Busca de um animal a partir do codigo de cadastro\n";
+        cout<<"5 - Busca de um animal a partir do seu nome\n";
+        cout<<"6 - Busca de animais por especie\n";
+        cout<<"7 - Procurar o animal pela especie e raca\n";
+        cout<<"8 - Procurar o animal pela especie, raca, sexo\n";
+        cout<<"9 - Contagem (quantidade de animais)\n";
+        cout<<"10 - Contagem por especie\n";
+        cout<<"11 - Listagem de todos os animais cadastrados\n";
         cout<<"0 - Sair do programa\n";
         
         valida_int(opcao,"\nDigite a opcao: ");
@@ -411,19 +434,23 @@ int main()
                     cout<<"Codigo de cadastro nao existe na lista, selecione outro codigo!\n";                
                 break;
             case 4: 
+                valida_int(cod,"Codigo de cadastro a buscar: ");
+                procura_codigo(lista,cod);
+                break;    
+            case 5: 
                 validastring(nom,"Nome: ");
                 procura_nome(lista,nom);
                 break;
-            case 5:
+            case 6:
                 validastring(esp,"Especie: ");
                 procura_especie(lista,esp);
                 break;
-            case 6:
+            case 7:
                 validastring(esp,"Especie: ");
                 validastring(rac,"Raca: ");
                 procura_especie_raca(lista,esp,rac);
                 break; 
-            case 7:
+            case 8:
                 validastring(esp,"Especie: ");
                 validastring(rac,"Raca: ");
                 do
@@ -450,15 +477,15 @@ int main()
                     } while (errosex==1); 
                     procura_especie_raca_sexo(lista,esp,rac,sex);
                 break; 
-            case 8: 
+            case 9: 
                 cout<<"Numero de animais: "<<conta_animal(lista)<<"\n\n\n";
                 break;
-            case 9: 
+            case 10: 
                 cout<<"Contagem de qual especie? ";
                 validastring(esp,"Especie: ");
                 cout<<"Numero de animais da especie "<<esp<<": "<<conta_esp(lista,esp)<<"\n\n\n";
                 break;
-            case 10: imprime_todos(lista); break;
+            case 11: imprime_todos(lista); break;
         }
     }while(opcao!=0);
     return 0;
