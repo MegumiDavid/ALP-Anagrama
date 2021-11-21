@@ -175,11 +175,9 @@ void remove_no(int cod, no **lista, no **apaga, int n){
         {
             checa = checa_cod(*apaga,aux->codigo);
             while (checa==0)
-            {
                 valida_int(aux->codigo, "Codigo do item apagado ja esta na lista de itens apagados, por favor inserir novo codigo (para fins de recuperaçao): ");
-                hora = ctime(&agora);
-                checa = checa_cod(*apaga,aux->codigo);
-            } 
+            hora = ctime(&agora);
+            checa = checa_cod(*apaga,aux->codigo);
             aux3->codigo=aux->codigo;
             strcpy(aux3->nome, aux->nome);
             strcpy(aux3->especie, aux->especie);
@@ -208,13 +206,11 @@ void remove_no(int cod, no **lista, no **apaga, int n){
         aux2->prox = aux->prox;
         if (n==1)
         {
-                        checa = checa_cod(*apaga,aux->codigo);
+            checa = checa_cod(*apaga,aux->codigo);
             while (checa==0)
-            {
                 valida_int(aux->codigo, "Codigo do item apagado ja esta na lista de itens apagados, por favor inserir novo codigo (para fins de recuperaçao): ");
-                hora = ctime(&agora);
-                checa = checa_cod(*apaga,aux->codigo);
-            } 
+            hora = ctime(&agora);
+            checa = checa_cod(*apaga,aux->codigo); 
             aux3->codigo=aux->codigo;
             strcpy(aux3->nome, aux->nome);
             strcpy(aux3->especie, aux->especie);
@@ -222,6 +218,7 @@ void remove_no(int cod, no **lista, no **apaga, int n){
             strcpy(aux3->sexo, aux->sexo);
             aux3->idade = aux->idade;
             strcpy(aux3->carc_gerais, aux->carc_gerais);
+            strcpy (aux3->hora_adicionado, aux->hora_adicionado); 
             strcpy (aux3->hora_ultima_alteracao, hora.c_str()); 
             aux3->prox = (*apaga);
             (*apaga) = aux3;
@@ -231,17 +228,35 @@ void remove_no(int cod, no **lista, no **apaga, int n){
     }
 }
 
-//funcao que altera informacoes de um no numa lista ligada
-void altera(no **lista, int cod){
+//coloca item na lista temporaria
+void coloca_temp(int cod, no **temporario, no **lista){
     no *aux;
+    no *aux2;
+    aux2 = *lista;
+    while (aux2->codigo != cod) aux2= aux2->prox;
+    aux = (no *) malloc(sizeof(no)); 
+    aux->codigo = cod;
+    strcpy(aux->nome, aux2->nome);
+    strcpy(aux->especie, aux2->especie);
+    strcpy(aux->raca, aux2->raca);
+    strcpy(aux->sexo, aux2->sexo);
+    aux->idade = aux2->idade;
+    strcpy(aux->carc_gerais, aux2->carc_gerais);
+    strcpy(aux->hora_adicionado, aux2->hora_adicionado);
+    //pega a hora (0)
+    time_t agora = time(0);
+    // converte para string (formato de data)
+    string hora = ctime(&agora); 
+    strcpy (aux->hora_ultima_alteracao, hora.c_str());
+    insere_alfabeticamente(temporario, aux);     
+}
+
+//funcao que altera informacoes de um no numa lista ligada
+void altera(no **lista, no **temp){
+    no *aux;
+    no *aux2;
+    aux2 = (*temp);
     aux = (no *) malloc(sizeof(no));
-    //seleciona o item da lista
-    while (lista != NULL)
-    {
-        if ((*lista)->codigo == cod)
-            break;
-        else (*lista) = (*lista)->prox;
-    }
     char nom[TAM], esp[TAM], rac[TAM], carc_g[TAM];
     int opcao, codigo, checa, idd;
     string hora; time_t agora;
@@ -255,82 +270,72 @@ void altera(no **lista, int cod){
     cout<<"5 - Sexo\n";
     cout<<"6 - Idade\n";
     cout<<"7 - Caracteristicas gerais\n";
-    cout<<"0 - Nao realizar mais nenhuma alteracao\n";
+    cout<<"0 - Nao realizar nenhuma alteracao\n";
     
     valida_int(opcao,"\nDigite a opcao: ");
     cin.ignore();
     switch(opcao)
     {
         case 1:
-            valida_int(codigo, "Novo codigo de cadastro: ");
-            checa = checa_cod((*lista), codigo);
-            if (checa == 0)
-                cout<<"Codigo de cadastro ja existe na lista, selecione outro codigo!\n";
-            else 
+            do
             {
+                valida_int(codigo, "Novo codigo de cadastro: ");
+                checa = checa_cod((*lista), codigo);
+                if (checa == 0)
+                    cout<<"Codigo de cadastro ja existe na lista, selecione outro codigo!\n";
+            }while(checa == 0);
                 aux->codigo = codigo;
-                strcpy (aux->nome, (*lista)->nome);
-                strcpy (aux->especie, (*lista)->especie);
-                strcpy (aux->raca, (*lista)->raca);
-                strcpy (aux->sexo, (*lista)->sexo);
-                aux->idade = (*lista)->idade;
-                strcpy (aux->carc_gerais, (*lista)->carc_gerais);
-                strcpy (aux->hora_adicionado, (*lista)->hora_adicionado);
-                remove_no(cod,lista,lista,0);
+                strcpy(aux->nome, aux2->nome);
+                strcpy(aux->especie, aux2->especie);
+                strcpy(aux->raca, aux2->raca);
+                strcpy(aux->sexo, aux2->sexo);
+                aux->idade = aux2->idade;
+                strcpy(aux->carc_gerais, aux2->carc_gerais);
                 cout<<"Codigo de cadastro alterado com sucesso.\n";
-            }
             break;
         case 2:
             validastring(nom,"Nome: ");
-            aux->codigo = cod;
-            strcpy (aux->nome, nom);
-            strcpy (aux->especie, (*lista)->especie);
-            strcpy (aux->raca, (*lista)->raca);
-            strcpy (aux->sexo, (*lista)->sexo);
-            aux->idade = (*lista)->idade;
-            strcpy (aux->carc_gerais, (*lista)->carc_gerais);
-            strcpy (aux->hora_adicionado, (*lista)->hora_adicionado);
-            remove_no(cod,lista,lista,0);
+            aux->codigo = aux2->codigo;
+            strcpy(aux->nome, nom);
+            strcpy(aux->especie, aux2->especie);
+            strcpy(aux->raca, aux2->raca);
+            strcpy(aux->sexo, aux2->sexo);
+            aux->idade = aux2->idade;
+            strcpy(aux->carc_gerais, aux2->carc_gerais);
             cout<<"Nome alterado com sucesso.\n";
             break;
         case 3:
             validastring(esp,"Especie: ");
-            aux->codigo = cod;
-            strcpy (aux->nome, (*lista)->nome);
-            strcpy (aux->especie, esp);
-            strcpy (aux->raca, (*lista)->raca);
-            strcpy (aux->sexo, (*lista)->sexo);
-            aux->idade = (*lista)->idade;
-            strcpy (aux->carc_gerais, (*lista)->carc_gerais);
-            strcpy (aux->hora_adicionado, (*lista)->hora_adicionado);
-            remove_no(cod,lista,lista,0);
+            aux->codigo = aux2->codigo;
+            strcpy(aux->nome, aux2->nome);
+            strcpy(aux->especie, esp);
+            strcpy(aux->raca, aux2->raca);
+            strcpy(aux->sexo, aux2->sexo);
+            aux->idade = aux2->idade;
+            strcpy(aux->carc_gerais, aux2->carc_gerais);    
             cout<<"Especie alterada com sucesso.\n";
             break;
         case 4: 
             validastring(rac,"Raca: ");
-            aux->codigo = cod;
-            strcpy (aux->nome, (*lista)->nome);
-            strcpy (aux->especie, (*lista)->especie);
-            strcpy (aux->raca, rac);
-            strcpy (aux->sexo, (*lista)->sexo);
-            aux->idade = (*lista)->idade;
-            strcpy (aux->carc_gerais, (*lista)->carc_gerais);
-            strcpy (aux->hora_adicionado, (*lista)->hora_adicionado);
-            remove_no(cod,lista,lista,0);
+            aux->codigo = aux2->codigo;
+            strcpy(aux->nome, aux2->nome);
+            strcpy(aux->especie, aux2->especie);
+            strcpy(aux->raca, rac);
+            strcpy(aux->sexo, aux2->sexo);
+            aux->idade = aux2->idade;
+            strcpy(aux->carc_gerais, aux2->carc_gerais);                
             cout<<"Raca alterada com sucesso.\n";
             break;
         case 5:
-            aux->codigo = cod;
-            strcpy (aux->nome, (*lista)->nome);
-            strcpy (aux->especie, (*lista)->especie);
-            strcpy (aux->raca, rac);
-            aux->idade = (*lista)->idade;
-            strcpy (aux->carc_gerais, (*lista)->carc_gerais);
-            strcpy (aux->hora_adicionado, (*lista)->hora_adicionado);     
-            if(strcmp((*lista)->sexo,"masculino")==0)
+            if(strcmp(aux2->sexo,"masculino")==0)
                 strcpy(aux->sexo, "feminino");
-            else strcpy(aux->sexo, "masculino");
-            remove_no(cod,lista,lista,0);               
+            else strcpy(aux->sexo, "masculino");  
+            aux->codigo = aux2->codigo;
+            strcpy(aux->nome, aux2->nome);
+            strcpy(aux->especie, aux2->especie);
+            strcpy(aux->raca, aux2->raca);
+            aux->idade = aux2->idade;
+            strcpy(aux->carc_gerais, aux2->carc_gerais);                         
             cout<<"Sexo alterado com sucesso.\n";
             break;
         case 6:
@@ -339,37 +344,52 @@ void altera(no **lista, int cod){
                 valida_int(idd, "Idade: "); 
                 if (idd<0||idd>100) cout<<"Insira apenas idades entre 0 e 100 anos!\n";
             }while(idd<0||idd>100);
-            aux->codigo = cod;
-            strcpy (aux->nome, (*lista)->nome);
-            strcpy (aux->especie, (*lista)->especie);
-            strcpy (aux->raca, (*lista)->raca);
-            strcpy (aux->sexo, (*lista)->sexo);
+            aux->codigo = aux2->codigo;
+            strcpy(aux->nome, aux2->nome);
+            strcpy(aux->especie, aux2->especie);
+            strcpy(aux->raca, aux2->raca);
+            strcpy(aux->sexo, aux2->sexo);
             aux->idade = idd;
-            strcpy (aux->carc_gerais, (*lista)->carc_gerais);
-            strcpy (aux->hora_adicionado, (*lista)->hora_adicionado);
-            remove_no(cod,lista,lista,0);           
+            strcpy(aux->carc_gerais, aux2->carc_gerais);                          
             cout<<"Idade alterada com sucesso.\n";
             break; 
         case 7: 
             validastring(carc_g,"Caracteristicas gerais: ");
-            aux->codigo = cod;
-            strcpy (aux->nome, (*lista)->nome);
-            strcpy (aux->especie, (*lista)->especie);
-            strcpy (aux->raca, (*lista)->raca);
-            strcpy (aux->sexo, (*lista)->sexo);
-            aux->idade = (*lista)->idade;
-            strcpy (aux->carc_gerais, carc_g);
-            strcpy (aux->hora_adicionado, (*lista)->hora_adicionado);
-            remove_no(cod,lista,lista,0);        
+            aux->codigo = aux2->codigo;
+            strcpy(aux->nome, aux2->nome);
+            strcpy(aux->especie, aux2->especie);
+            strcpy(aux->raca, aux2->raca);
+            strcpy(aux->sexo, aux2->sexo);
+            aux->idade = aux2->idade;
+            strcpy(aux->carc_gerais, carc_g);        
             cout<<"Caracteristicas gerais alteradas com sucesso.\n";
             break;
+        case 0:
+            aux->codigo = aux2->codigo;
+            strcpy(aux->nome, aux2->nome);
+            strcpy(aux->especie, aux2->especie);
+            strcpy(aux->raca, aux2->raca);
+            strcpy(aux->sexo, aux2->sexo);
+            aux->idade = aux2->idade;
+            strcpy(aux->carc_gerais, aux2->carc_gerais);
+            cout<<"Codigo de cadastro alterado com sucesso.\n";
+            break;
     }
-    //pega a hora
-    agora = time(0);
-    // converte para string (formato de data) e insere na lista
-    hora = ctime(&agora);
-    strcpy (aux->hora_ultima_alteracao, hora.c_str());    
-    insere_alfabeticamente(lista,aux);
+    if (opcao != 0)
+    {
+        strcpy(aux->hora_adicionado, aux2->hora_adicionado);
+        //pega a hora (0)
+        agora = time(0);
+        // converte para string (formato de data)
+        hora = ctime(&agora); 
+        strcpy (aux->hora_ultima_alteracao, hora.c_str());
+        insere_alfabeticamente(lista, aux);
+    }
+    else
+    {
+        strcpy(aux->hora_adicionado, aux2->hora_adicionado);
+        insere_alfabeticamente(lista, aux);
+    }
 }
 
 // funcao que busca por no pelo codigo de cadastro
@@ -555,17 +575,20 @@ void adiciona_removido(int cod, no **lista, no *apaga){
 }
 
 //funcao que adiciona um item da lista ligada na lista de adocao
-void adiciona_adocao(int cod_adocao, no **adota, no *lista){
+void adiciona_adocao(int cod_adocao, int cod_adotado, no **adota, no **lista){
     no *aux;
+    no *aux2;
+    aux2 = *lista;
+    while (aux2->codigo != cod_adotado) aux2= aux2->prox;
     aux = (no *) malloc(sizeof(no));
     aux->codigo = cod_adocao;
-    strcpy(aux->nome, lista->nome);
-    strcpy(aux->especie, lista->especie);
-    strcpy(aux->raca, lista->raca);
-    strcpy(aux->sexo, lista->sexo);
-    aux->idade = lista->idade;
-    strcpy(aux->carc_gerais, lista->carc_gerais);
-    strcpy(aux->hora_adicionado, lista->hora_adicionado);
+    strcpy(aux->nome, aux2->nome);
+    strcpy(aux->especie, aux2->especie);
+    strcpy(aux->raca, aux2->raca);
+    strcpy(aux->sexo, aux2->sexo);
+    aux->idade = aux2->idade;
+    strcpy(aux->carc_gerais, aux2->carc_gerais);
+    strcpy(aux->hora_adicionado, aux2->hora_adicionado);
     //pega a hora (0)
     time_t agora = time(0);
     // converte para string (formato de data)

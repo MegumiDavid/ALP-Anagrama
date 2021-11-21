@@ -24,6 +24,7 @@ int main()
     cout<<"==========================================\n\n";
     
     no *lista = NULL; // inicializando o no, com NULL
+    no *temp = NULL; // inicializando o no, com NULL    
     no *apagados = NULL; // inicia com NULL
     no *adotados = NULL; // inicia com NULL
     do{
@@ -64,7 +65,12 @@ int main()
                 valida_int(cod, "\nCodigo de cadastro do animal cujas informacoes serao alteradas: "); 
                 checa = checa_cod(lista, cod);
                 if (checa == 0)
-                    altera(&lista, cod);
+                {
+                    coloca_temp(cod, &temp, &lista);
+                    remove_no(cod, &lista, &apagados, 0);
+                    altera(&lista, &temp);
+                    remove_no(cod, &temp, &apagados, 0);
+                }
                 else 
                     cout<<"Codigo de cadastro nao existe na lista, selecione outro codigo!\n";                
                 break;
@@ -137,13 +143,15 @@ int main()
                 valida_int(cod, "\nCodigo de cadastro do animal que foi adotado: "); 
                 checa = checa_cod(lista, cod);
                 if (checa == 0)
-                    adiciona_adocao(cod_ad, &adotados, lista);
+                    {
+                    adiciona_adocao(cod_ad, cod, &adotados, &lista);
+                    cod_ad++;
+                    remove_no(cod, &lista, &apagados, 0);                    
+                    }
                 else 
                     cout<<"Codigo de cadastro nao existe na lista, selecione outro codigo!\n";
-                cod_ad++;
-                remove_no(cod, &lista, &apagados, 0);
                 break;         
-            case 15: imprime_todos(adotados, "adotados","adocao: "); break;           
+            case 15: imprime_todos(adotados, "adotados","adocao: "); break;
         }
     }while(opcao!=0);
     return 0;
