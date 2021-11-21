@@ -47,8 +47,13 @@ int main()
         cout<<"15 - Listagem de todas as adocoes\n";
         cout<<"0 - Sair do programa\n";
         
-        valida_int(opcao,"\nDigite a opcao: ");
-        cin.ignore();
+        do
+        {
+            valida_int(opcao,"\nDigite a opcao: ");
+            cin.ignore();
+            if (opcao<0||opcao>15)
+                cout<<"Insira apenas opcoes presentes no menu!";
+        } while (opcao<0||opcao>15);
         switch(opcao){
             case 1:     
                 insere(&lista);

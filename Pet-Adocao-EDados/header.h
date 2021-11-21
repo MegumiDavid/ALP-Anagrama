@@ -271,9 +271,13 @@ void altera(no **lista, no **temp){
     cout<<"6 - Idade\n";
     cout<<"7 - Caracteristicas gerais\n";
     cout<<"0 - Nao realizar nenhuma alteracao\n";
-    
-    valida_int(opcao,"\nDigite a opcao: ");
-    cin.ignore();
+    do
+    {
+        valida_int(opcao,"\nDigite a opcao: ");
+        cin.ignore();
+        if (opcao<0||opcao>7)
+            cout<<"Insira apenas opcoes presentes no menu!";
+    } while (opcao<0||opcao>7);
     switch(opcao)
     {
         case 1:
@@ -372,7 +376,6 @@ void altera(no **lista, no **temp){
             strcpy(aux->sexo, aux2->sexo);
             aux->idade = aux2->idade;
             strcpy(aux->carc_gerais, aux2->carc_gerais);
-            cout<<"Codigo de cadastro alterado com sucesso.\n";
             break;
     }
     if (opcao != 0)
@@ -402,15 +405,15 @@ void procura_codigo(no *lista, int cod){
             cout<<"==========================================\n";
             cout<<"Nome: "<<lista->nome<<endl;
             cout<<"Especie: "<<lista->especie<<endl;
-            cout<<"Raça: "<<lista->raca<<endl;
+            cout<<"Raca: "<<lista->raca<<endl;
             cout<<"Sexo: "<<lista->sexo<<endl;
-            cout<<"Idade: "<<lista->idade;
+            cout<<"Idade: "<<lista->idade<<endl;
             cout<<"Caracteristicas gerais: "<<lista->carc_gerais<<endl;
         }
         lista = lista->prox;
     }
     if(x==0){
-        cout<<cod<<" - NÃO foi ENCONTRADO"<<endl;
+        cout<<cod<<" - NAO foi ENCONTRADO"<<endl;
         cout<<"==========================================\n";
 }}
 
@@ -418,12 +421,12 @@ void procura_codigo(no *lista, int cod){
 void procura_nome(no *lista, char *nom){
     int x = 0;
     while (lista != NULL){
-        if (strcmp(lista->nome,nom) == 0){
+        if (stricmp(lista->nome,nom) == 0){
             x = 1;
             cout<<"\n\n"<<nom<<" - ENCONTRADO com sucesso"<<endl;
             cout<<"==========================================\n";
             cout<<"Especie: "<<lista->especie<<endl;
-            cout<<"Raça: "<<lista->raca<<endl;
+            cout<<"Raca: "<<lista->raca<<endl;
             cout<<"Sexo: "<<lista->sexo<<endl;
             cout<<"Idade: "<<lista->idade<<endl;
             cout<<"Caracteristicas gerais: "<<lista->carc_gerais<<endl;
@@ -433,15 +436,15 @@ void procura_nome(no *lista, char *nom){
         lista = lista->prox;
     }
     if(x==0){
-        cout<<nom<<" - NÃO foi ENCONTRADO"<<endl;
+        cout<<nom<<" - NAO foi ENCONTRADO"<<endl;
         cout<<"==========================================\n";
 }}
 
 // funcao que busca por no pela especie
-void procura_especie(no *lista, char esp[]){
+void procura_especie(no *lista, char *esp){
     int x = 0;
     while (lista != NULL){
-        if (strcmp(lista->especie,esp) == 0){
+        if (stricmp(lista->especie,esp) == 0){
             x = 1;
             cout<<"\n\n"<<esp<<" - ENCONTRADO com sucesso"<<endl;
             cout<<"==========================================\n";
@@ -472,13 +475,13 @@ void procura_especie_raca(no *lista,  char esp[], char rac[]){
             cout<<"Sexo: "<<lista->sexo<<endl;
             cout<<"Idade: "<<lista->idade<<endl;
             cout<<"Caracteristicas gerais: "<<lista->carc_gerais<<endl;
-            cout<<"Data e hora inicial do cadastro: "<<lista->hora_adicionado;
+            cout<<"Data e hora inicial do cadastro: "<<lista->hora_adicionado<<endl;
             cout<<"Data e hora da ultima alteracao: "<<lista->hora_ultima_alteracao<<endl;
         }
         lista = lista->prox;
     }
     if(x==0){
-        cout<<esp<<" + "<<rac<<" - NÃO foi ENCONTRADO"<<endl;
+        cout<<esp<<" + "<<rac<<" - NAO foi ENCONTRADO"<<endl;
         cout<<"==========================================\n";
 }}
 
@@ -500,7 +503,7 @@ void procura_especie_raca_sexo(no *lista, char esp[], char rac[], char sex[]){
         lista = lista->prox;
     }
     if(x==0){
-        cout<<esp<<" + "<<rac<<" - NÃO foi ENCONTRADO"<<endl;
+        cout<<esp<<" + "<<rac<<" - NAO foi ENCONTRADO"<<endl;
         cout<<"==========================================\n";
 }}
 
